@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/news"
+	xmlns:tns="http://www.example.org/news">
+
+	<element name="news" tns:type="News">
+		<complexType>
+			<sequence minOccurs="1" maxOccurs="unbounded">
+				<element name="newsItem" tns:type="NewsItem"></element>
+			</sequence>	
+		</complexType>
+	</element>
+	
+	<complexType name="NewsItem">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<choice>
+				<element name="movie" tns:type="Movie" />
+				<element name="book" tns:type="Book" />
+				<element name="cd" tns:type="CD" />
+			</choice>
+		</sequence>
+		<attribute name="id" type="int" use="required" />
+	</complexType>
+	
+	<complexType name="Movie">
+		<group ref="tns:newsContent" />
+		<attribute name="id" type="int" use="required" />
+	</complexType>
+	
+	<complexType name="Book">
+		<group ref="tns:newsContent" />
+		<attribute name="id" type="int" use="required" />
+	</complexType>
+
+	<complexType name="CD">
+		<group ref="tns:newsContent" />
+		<attribute name="id" type="int" use="required" />
+	</complexType>
+
+	<group name="newsContent">
+		<sequence>
+			<element name="newsName" type="string" />
+			<element name="dateOfIssue" type="string" />
+			<element name="newsBody" type="string" />
+			<element name="provider" type="tns:Provider" />
+		</sequence>
+	</group>
+	
+	<complexType name="Provider">
+		<simpleContent>
+			<extension base="string">
+				<attribute name="author" type="string" use="optional"/>
+				<attribute name="authors" type="string" use="optional"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	
+</schema>
