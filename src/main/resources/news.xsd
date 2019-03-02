@@ -3,10 +3,10 @@
 	targetNamespace="http://www.example.org/news"
 	xmlns:tns="http://www.example.org/news">
 
-	<element name="news" tns:type="News">
+	<element name="news">
 		<complexType>
 			<sequence minOccurs="1" maxOccurs="unbounded">
-				<element name="newsItem" tns:type="NewsItem"></element>
+				<element name="newsItem" type="tns:NewsItem"></element>
 			</sequence>	
 		</complexType>
 	</element>
@@ -14,9 +14,9 @@
 	<complexType name="NewsItem">
 		<sequence minOccurs="1" maxOccurs="unbounded">
 			<choice>
-				<element name="movie" tns:type="Movie" />
-				<element name="book" tns:type="Book" />
-				<element name="cd" tns:type="CD" />
+				<element name="movie" type="tns:Movie" />
+				<element name="book" type="tns:Book" />
+				<element name="cd" type="tns:CD" />
 			</choice>
 		</sequence>
 		<attribute name="id" type="int" use="required" />

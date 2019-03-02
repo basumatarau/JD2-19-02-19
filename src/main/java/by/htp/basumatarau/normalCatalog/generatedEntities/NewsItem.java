@@ -3,12 +3,11 @@ package by.htp.basumatarau.normalCatalog.generatedEntities;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -23,9 +22,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence maxOccurs="unbounded"&gt;
  *         &lt;choice&gt;
- *           &lt;element name="movie" type="{http://www.w3.org/2001/XMLSchema}anyType"/&gt;
- *           &lt;element name="book" type="{http://www.w3.org/2001/XMLSchema}anyType"/&gt;
- *           &lt;element name="cd" type="{http://www.w3.org/2001/XMLSchema}anyType"/&gt;
+ *           &lt;element name="movie" type="{http://www.example.org/news}Movie"/&gt;
+ *           &lt;element name="book" type="{http://www.example.org/news}Book"/&gt;
+ *           &lt;element name="cd" type="{http://www.example.org/news}CD"/&gt;
  *         &lt;/choice&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
@@ -42,12 +41,12 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class NewsItem {
 
-    @XmlElementRefs({
-        @XmlElementRef(name = "movie", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "book", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "cd", type = JAXBElement.class, required = false)
+    @XmlElements({
+        @XmlElement(name = "movie", type = Movie.class),
+        @XmlElement(name = "book", type = Book.class),
+        @XmlElement(name = "cd", type = CD.class)
     })
-    protected List<JAXBElement<Object>> movieOrBookOrCd;
+    protected List<Object> movieOrBookOrCd;
     @XmlAttribute(name = "id", required = true)
     protected int id;
 
@@ -69,15 +68,15 @@ public class NewsItem {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * {@link Movie }
+     * {@link Book }
+     * {@link CD }
      * 
      * 
      */
-    public List<JAXBElement<Object>> getMovieOrBookOrCd() {
+    public List<Object> getMovieOrBookOrCd() {
         if (movieOrBookOrCd == null) {
-            movieOrBookOrCd = new ArrayList<JAXBElement<Object>>();
+            movieOrBookOrCd = new ArrayList<Object>();
         }
         return this.movieOrBookOrCd;
     }

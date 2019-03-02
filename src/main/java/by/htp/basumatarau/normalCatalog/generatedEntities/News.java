@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence maxOccurs="unbounded"&gt;
- *         &lt;element name="newsItem" type="{http://www.w3.org/2001/XMLSchema}anyType"/&gt;
+ *         &lt;element name="newsItem" type="{http://www.example.org/news}NewsItem"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
 public class News {
 
     @XmlElement(required = true)
-    protected List<Object> newsItem;
+    protected List<NewsItem> newsItem;
 
     /**
      * Gets the value of the newsItem property.
@@ -57,13 +57,13 @@ public class News {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * {@link NewsItem }
      * 
      * 
      */
-    public List<Object> getNewsItem() {
+    public List<NewsItem> getNewsItem() {
         if (newsItem == null) {
-            newsItem = new ArrayList<Object>();
+            newsItem = new ArrayList<NewsItem>();
         }
         return this.newsItem;
     }

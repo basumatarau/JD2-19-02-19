@@ -1,10 +1,7 @@
 
 package by.htp.basumatarau.normalCatalog.generatedEntities;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -24,9 +21,6 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _NewsItemMovie_QNAME = new QName("", "movie");
-    private final static QName _NewsItemBook_QNAME = new QName("", "book");
-    private final static QName _NewsItemCd_QNAME = new QName("", "cd");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: by.htp.basumatarau.normalCatalog.generatedEntities
@@ -81,45 +75,6 @@ public class ObjectFactory {
      */
     public Provider createProvider() {
         return new Provider();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "movie", scope = NewsItem.class)
-    public JAXBElement<Object> createNewsItemMovie(Object value) {
-        return new JAXBElement<Object>(_NewsItemMovie_QNAME, Object.class, NewsItem.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "book", scope = NewsItem.class)
-    public JAXBElement<Object> createNewsItemBook(Object value) {
-        return new JAXBElement<Object>(_NewsItemBook_QNAME, Object.class, NewsItem.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "cd", scope = NewsItem.class)
-    public JAXBElement<Object> createNewsItemCd(Object value) {
-        return new JAXBElement<Object>(_NewsItemCd_QNAME, Object.class, NewsItem.class, value);
     }
 
 }

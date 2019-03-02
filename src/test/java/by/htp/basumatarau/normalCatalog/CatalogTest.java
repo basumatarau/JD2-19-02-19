@@ -40,8 +40,8 @@ public class CatalogTest {
 		List<NewsItem> newsItems = new EntitySerializer().deserializeEntitiesFromXml(new FileReader(testXmlFile));
 		for(NewsItem newsItem : newsItems) {
 			System.out.println(newsItem.getId());
-			for(JAXBElement<?> elem : newsItem.getMovieOrBookOrCd()) {
-				System.out.println(elem.getValue());
+			for(Object elem : newsItem.getMovieOrBookOrCd()) {
+				System.out.println(elem);
 			}
 		}
 	}
@@ -59,9 +59,8 @@ public class CatalogTest {
 		prov.setAuthor("author");
 		prov.setValue("providerValue");
 		movie.setProvider(prov);
-		JAXBElement<Object> jbe = of.createNewsItemMovie(movie);
 		NewsItem ni = of.createNewsItem();
-		ni.getMovieOrBookOrCd().add(jbe);
+		ni.getMovieOrBookOrCd().add(movie);
 	
 		System.out.println(marshTestXmlOut);
 		

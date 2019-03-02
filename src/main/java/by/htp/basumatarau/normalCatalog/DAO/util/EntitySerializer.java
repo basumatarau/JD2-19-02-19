@@ -1,5 +1,6 @@
 package by.htp.basumatarau.normalCatalog.DAO.util;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -26,41 +27,20 @@ public class EntitySerializer {
 	
 	public List<NewsItem> deserializeEntitiesFromXml(Reader xmlInput) {
 		List<NewsItem> newsItems = new ArrayList<>();
-		
+
 		try {
+
+			if(!xmlInput.ready()){
+				return newsItems;
+			}
+
 			JAXBContext context = JAXBContext.newInstance(entityPackageName);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			
 			News news = (News)unmarshaller.unmarshal(xmlInput); 
-			for(Object newsItemNode : news.getNewsItem()) {
-				
-				if(!newsItemNode.getClass().equals(NewsItem.class)) {
-					Node nodeDataNewsItem = (Node) newsItemNode;
-					NodeList nList = ((Node) newsItemNode).getChildNodes();
-					NewsItem ni = of.createNewsItem();
-					ni.setId(Integer.parseInt(
-									nodeDataNewsItem.getAttributes().getNamedItem("id").getNodeValue()
-									)
-							);
-					for(int j = 0; j< nList.getLength(); j++ ) {
-						String nodeName = nList.item(j).getNodeName();
-						if(nodeName.equals("movie")) {
-							JAXBElement<Movie> m = unmarshaller.unmarshal(nList.item(j), Movie.class);
-							ni.getMovieOrBookOrCd().add(of.createNewsItemMovie(m.getValue()));
-						}else if(nodeName.equals("book")) {
-							JAXBElement<Book> b = unmarshaller.unmarshal(nList.item(j), Book.class);
-							ni.getMovieOrBookOrCd().add(of.createNewsItemBook(b.getValue()));
-						}else if(nodeName.equals("cd")) {
-							JAXBElement<CD> c = unmarshaller.unmarshal(nList.item(j), CD.class);
-							ni.getMovieOrBookOrCd().add(of.createNewsItemCd(c.getValue()));
-						}
-					}
-					newsItems.add(ni);
-				}else {
-					newsItems.add((NewsItem)newsItemNode);
-				}
-			}
-		} catch (JAXBException e) {
+			newsItems = news.getNewsItem();
+
+		} catch (JAXBException | IOException e) {
 			System.out.println("JAXB failure " + e.getMessage());
 			throw new RuntimeException(e);
 		} 
@@ -76,17 +56,7 @@ public class EntitySerializer {
 			News news = of.createNews();
 			
 			for(NewsItem item : newsItems) {
-				NewsItem nI = of.createNewsItem();
-				for(JAXBElement<?> jbe : item.getMovieOrBookOrCd()) {
-					if(jbe.getName().toString().equals("movie")) {
-						nI.getMovieOrBookOrCd().add(of.createNewsItemMovie(jbe.getValue()));
-					}else if(jbe.getName().toString().equals("book")) {
-						nI.getMovieOrBookOrCd().add(of.createNewsItemBook(jbe.getValue()));
-					}else if(jbe.getName().toString().equals("cd")) {
-						nI.getMovieOrBookOrCd().add(of.createNewsItemCd(jbe.getValue()));
-					}
-				}
-				news.getNewsItem().add(nI);
+				news.getNewsItem().add(item);
 			}
 			marshaller.marshal(news, xmlOut);
 		} catch (JAXBException e) {
@@ -97,8 +67,8 @@ public class EntitySerializer {
 	
 	public List<Object> getNewsItemContent(NewsItem newsItem){
 		List<Object> result = new ArrayList<>();
-		for(JAXBElement<?> jbe : newsItem.getMovieOrBookOrCd()){
-			result.add(jbe.getValue());
+		for(Object item : newsItem.getMovieOrBookOrCd()){
+			result.add(item);
 		}
 		return result;
 	}
@@ -106,13 +76,7 @@ public class EntitySerializer {
 	public NewsItem getNewsItem(List<Object> contents){
 		NewsItem result = of.createNewsItem();
 		for(Object item : contents) {
-			if(item instanceof Movie) {
-				result.getMovieOrBookOrCd().add(of.createNewsItemMovie(item));
-			}else if(item instanceof Book) {
-				result.getMovieOrBookOrCd().add(of.createNewsItemBook(item));
-			}else if(item instanceof CD) {
-				result.getMovieOrBookOrCd().add(of.createNewsItemCd(item));
-			}
+			result.getMovieOrBookOrCd().add(item);
 		}
 		return result;
 	}

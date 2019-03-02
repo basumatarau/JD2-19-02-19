@@ -27,11 +27,12 @@ public class XjcEntityGenerator {
 		targetPath = System.getProperty("user.dir") + "/src/main/java";
 	}
 	
-	/* uncomment and execute if xsd has been updated
+	//uncomment and execute if xsd has been updated
+
 	public static void main(String... args) {
 		updateEntities();
 	}
-	*/
+
 	
 	private static void updateEntities(){
 		try {
