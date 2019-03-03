@@ -1,6 +1,7 @@
 package by.htp.basumatarau.normalCatalog.DAO;
 
-import by.htp.basumatarau.normalCatalog.DAO.util.EntitySerializer;
+
+import by.htp.basumatarau.normalCatalog.DAO.impl.EntitySerializer;
 
 public abstract class AbstractDAO {
 	private static EntitySerializer serializer = new EntitySerializer();

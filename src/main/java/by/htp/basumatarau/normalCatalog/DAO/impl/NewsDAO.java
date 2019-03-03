@@ -1,4 +1,4 @@
-package by.htp.basumatarau.normalCatalog.DAO;
+package by.htp.basumatarau.normalCatalog.DAO.impl;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import by.htp.basumatarau.normalCatalog.DAO.AbstractDAO;
+import by.htp.basumatarau.normalCatalog.DAO.IDAO;
 import by.htp.basumatarau.normalCatalog.generatedEntities.Book;
 import by.htp.basumatarau.normalCatalog.generatedEntities.CD;
 import by.htp.basumatarau.normalCatalog.generatedEntities.Movie;
 import by.htp.basumatarau.normalCatalog.generatedEntities.NewsItem;
 
-public class NewsDAO extends AbstractDAO implements IDAO<NewsItem, String>{
+public class NewsDAO extends AbstractDAO implements IDAO<NewsItem, String> {
 
 	private enum LOOK_UP_OPTION{
 		BY_NEWS_NAME, BY_PROVIDER, BY_DATE_OF_ISSUE, BY_NEWS_BODY
@@ -174,7 +176,7 @@ public class NewsDAO extends AbstractDAO implements IDAO<NewsItem, String>{
 				}
 			}
 			if(!matchedContent.isEmpty()) {
-				lookUpResponse.add(getSerializer().getNewsItem(matchedContent));
+				lookUpResponse.add(getSerializer().getNewsItem(matchedContent, ni.getCategory()));
 			}
 			matchedContent.clear();
 		}

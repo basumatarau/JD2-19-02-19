@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.example.org/news"
-	xmlns:tns="http://www.example.org/news">
+	targetNamespace="http://by.htp.basumatarau.normalCatalog/news"
+	xmlns:tns="http://by.htp.basumatarau.normalCatalog/news">
 
 	<element name="news">
 		<complexType>
@@ -19,7 +19,7 @@
 				<element name="cd" type="tns:CD" />
 			</choice>
 		</sequence>
-		<attribute name="id" type="int" use="required" />
+		<attribute name="category" type="string" use="required" />
 	</complexType>
 	
 	<complexType name="Movie">
@@ -40,9 +40,9 @@
 	<group name="newsContent">
 		<sequence>
 			<element name="newsName" type="string" />
+			<element name="provider" type="tns:Provider" />
 			<element name="dateOfIssue" type="string" />
 			<element name="newsBody" type="string" />
-			<element name="provider" type="tns:Provider" />
 		</sequence>
 	</group>
 	

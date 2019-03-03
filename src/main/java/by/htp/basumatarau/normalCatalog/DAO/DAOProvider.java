@@ -1,5 +1,6 @@
 package by.htp.basumatarau.normalCatalog.DAO;
 
+import by.htp.basumatarau.normalCatalog.DAO.impl.NewsDAO;
 import by.htp.basumatarau.normalCatalog.generatedEntities.NewsItem;
 
 public class DAOProvider {

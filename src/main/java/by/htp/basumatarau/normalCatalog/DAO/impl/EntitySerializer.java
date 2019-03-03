@@ -1,4 +1,4 @@
-package by.htp.basumatarau.normalCatalog.DAO.util;
+package by.htp.basumatarau.normalCatalog.DAO.impl;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -7,17 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import by.htp.basumatarau.normalCatalog.generatedEntities.ObjectFactory;
-import by.htp.basumatarau.normalCatalog.generatedEntities.Book;
-import by.htp.basumatarau.normalCatalog.generatedEntities.CD;
-import by.htp.basumatarau.normalCatalog.generatedEntities.Movie;
 import by.htp.basumatarau.normalCatalog.generatedEntities.News;
 import by.htp.basumatarau.normalCatalog.generatedEntities.NewsItem;
 
@@ -73,11 +67,12 @@ public class EntitySerializer {
 		return result;
 	}
 	
-	public NewsItem getNewsItem(List<Object> contents){
+	public NewsItem getNewsItem(List<Object> contents, String category){
 		NewsItem result = of.createNewsItem();
 		for(Object item : contents) {
 			result.getMovieOrBookOrCd().add(item);
 		}
+		result.setCategory(category);
 		return result;
 	}
 }

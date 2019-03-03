@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tc:news xmlns:tc="http://www.example.org/news"
+<tc:news xmlns:tc="http://by.htp.basumatarau.normalCatalog/news"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.example.org/news news.xsd">
-	<newsItem id="1">
+	xsi:schemaLocation="http://by.htp.basumatarau.normalCatalog/news news.xsd">
+	<newsItem category="kids">
 		<movie id="1">
 			<newsName> Thor: Ragnarok </newsName>
 			<provider author="Taika Waititi">Marvel Studios</provider>
@@ -16,7 +16,7 @@
 			<newsBody>When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian warrior in training, leaves home to fight a war, discovering her full powers and true destiny.</newsBody>
 		</movie>
 	</newsItem>
-	<newsItem id="2">
+	<newsItem category="teenagers">
 		<movie id="3">
 			<newsName> Guardians of the Galaxy Vol. 2 </newsName>
 			<provider author="James Gunn">Marvel Studios</provider>
@@ -36,7 +36,7 @@
 			<newsBody>The novel chronicles an era that Fitzgerald himself dubbed the "Jazz Age". Following the shock and chaos of World War I, American society enjoyed unprecedented levels of prosperity during the "roaring" 1920s as the economy soared...</newsBody>
 		</book>
 	</newsItem>
-	<newsItem id="3">
+	<newsItem category="adults">
 		<book id="6">
 			<newsName> Fifty Shades Trilogy (Fifty Shades of Grey / Fifty Shades Darker / Fifty Shades Freed)</newsName>
 			<provider author="E L James">Vintage; Box edition (June 12, 2012)</provider>

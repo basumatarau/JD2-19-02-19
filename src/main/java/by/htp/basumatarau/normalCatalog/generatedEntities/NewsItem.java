@@ -22,12 +22,12 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence maxOccurs="unbounded"&gt;
  *         &lt;choice&gt;
- *           &lt;element name="movie" type="{http://www.example.org/news}Movie"/&gt;
- *           &lt;element name="book" type="{http://www.example.org/news}Book"/&gt;
- *           &lt;element name="cd" type="{http://www.example.org/news}CD"/&gt;
+ *           &lt;element name="movie" type="{http://by.htp.basumatarau.normalCatalog/news}Movie"/&gt;
+ *           &lt;element name="book" type="{http://by.htp.basumatarau.normalCatalog/news}Book"/&gt;
+ *           &lt;element name="cd" type="{http://by.htp.basumatarau.normalCatalog/news}CD"/&gt;
  *         &lt;/choice&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="category" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -47,8 +47,8 @@ public class NewsItem {
         @XmlElement(name = "cd", type = CD.class)
     })
     protected List<Object> movieOrBookOrCd;
-    @XmlAttribute(name = "id", required = true)
-    protected int id;
+    @XmlAttribute(name = "category", required = true)
+    protected String category;
 
     /**
      * Gets the value of the movieOrBookOrCd property.
@@ -82,19 +82,27 @@ public class NewsItem {
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the category property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getId() {
-        return id;
+    public String getCategory() {
+        return category;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the category property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setId(int value) {
-        this.id = value;
+    public void setCategory(String value) {
+        this.category = value;
     }
 
 }

@@ -1,4 +1,4 @@
-package by.htp.basumatarau.normalCatalog.DAO.util;
+package by.htp.basumatarau.normalCatalog.DAO.utl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import by.htp.basumatarau.normalCatalog.services.INewsService;
 import by.htp.basumatarau.normalCatalog.services.NewsService;
-import by.htp.basumatarau.normalCatalog.DAO.util.EntitySerializer;
+import by.htp.basumatarau.normalCatalog.DAO.impl.EntitySerializer;
 import by.htp.basumatarau.normalCatalog.generatedEntities.Movie;
 import by.htp.basumatarau.normalCatalog.generatedEntities.NewsItem;
 import by.htp.basumatarau.normalCatalog.generatedEntities.ObjectFactory;
@@ -17,8 +17,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.bind.JAXBElement;
 
 public class CatalogTest {
 	private static final String testXmlFile;
@@ -39,7 +37,7 @@ public class CatalogTest {
 		System.out.println("-------------marshalling test-------------");
 		List<NewsItem> newsItems = new EntitySerializer().deserializeEntitiesFromXml(new FileReader(testXmlFile));
 		for(NewsItem newsItem : newsItems) {
-			System.out.println(newsItem.getId());
+			System.out.println(newsItem.getCategory());
 			for(Object elem : newsItem.getMovieOrBookOrCd()) {
 				System.out.println(elem);
 			}
@@ -61,6 +59,7 @@ public class CatalogTest {
 		movie.setProvider(prov);
 		NewsItem ni = of.createNewsItem();
 		ni.getMovieOrBookOrCd().add(movie);
+		ni.setCategory("kids");
 	
 		System.out.println(marshTestXmlOut);
 		

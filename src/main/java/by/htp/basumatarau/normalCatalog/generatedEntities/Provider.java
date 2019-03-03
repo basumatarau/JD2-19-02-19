@@ -111,40 +111,4 @@ public class Provider {
         this.authors = value;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        result = prime * result + ((author == null) ? 0 : author.hashCode());
-        result = prime * result + ((authors == null) ? 0 : authors.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Provider other = (Provider) obj;
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-        if (author == null) {
-            if (other.author != null)
-                return false;
-        } else if (!author.equals(other.author))
-            return false;
-        if (authors == null) {
-            if (other.authors != null)
-                return false;
-        } else if (!authors.equals(other.authors))
-            return false;
-        return true;
-    }
 }

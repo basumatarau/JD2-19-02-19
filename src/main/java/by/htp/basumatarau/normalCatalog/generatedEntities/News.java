@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence maxOccurs="unbounded"&gt;
- *         &lt;element name="newsItem" type="{http://www.example.org/news}NewsItem"/&gt;
+ *         &lt;element name="newsItem" type="{http://by.htp.basumatarau.normalCatalog/news}NewsItem"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;

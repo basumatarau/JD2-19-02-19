@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:news xmlns:ns2="http://by.htp.basumatarau.normalCatalog/news">
+    <newsItem category="kids">
+        <movie id="1">
+            <newsName> Thor: Ragnarok </newsName>
+            <provider author="Taika Waititi">Marvel Studios</provider>
+            <dateOfIssue>2017</dateOfIssue>
+            <newsBody>Thor is imprisoned on the planet Sakaar, and must race against time to return to Asgard and stop Ragnarök, the destruction of his world, at the hands of the powerful and ruthless villain Hela.</newsBody>
+        </movie>
+        <movie id="2">
+            <newsName> Wonder Woman</newsName>
+            <provider author="Patty Jenkins">DC comics</provider>
+            <dateOfIssue>2017</dateOfIssue>
+            <newsBody>When a pilot crashes and tells of conflict in the outside world, Diana, an Amazonian warrior in training, leaves home to fight a war, discovering her full powers and true destiny.</newsBody>
+        </movie>
+    </newsItem>
+    <newsItem category="teenagers">
+        <movie id="3">
+            <newsName> Guardians of the Galaxy Vol. 2 </newsName>
+            <provider author="James Gunn">Marvel Studios</provider>
+            <dateOfIssue>2017</dateOfIssue>
+            <newsBody>The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.</newsBody>
+        </movie>
+        <movie id="4">
+            <newsName> Logan </newsName>
+            <provider author="James Mangold">DC comics</provider>
+            <dateOfIssue>2017</dateOfIssue>
+            <newsBody>In a future where mutants are nearly extinct, an elderly and weary Logan leads a quiet life. But when Laura, a mutant child pursued by scientists, comes to him for help, he must get her to safety.</newsBody>
+        </movie>
+        <book id="5">
+            <newsName>The Great Gatsby</newsName>
+            <provider author="F. Scott Fitzgerald">Scribner (September 30, 2004)</provider>
+            <dateOfIssue>2004</dateOfIssue>
+            <newsBody>The novel chronicles an era that Fitzgerald himself dubbed the "Jazz Age". Following the shock and chaos of World War I, American society enjoyed unprecedented levels of prosperity during the "roaring" 1920s as the economy soared...</newsBody>
+        </book>
+    </newsItem>
+    <newsItem category="adult content">
+        <book id="6">
+            <newsName> Fifty Shades Trilogy (Fifty Shades of Grey / Fifty Shades Darker / Fifty Shades Freed)</newsName>
+            <provider author="E L James">Vintage; Box edition (June 12, 2012)</provider>
+            <dateOfIssue>2012</dateOfIssue>
+            <newsBody>Now available as a three-volume paperback boxed set, E L James’s New York Times #1 bestselling trilogy has been hailed by Entertainment Weekly as being “in a class by itself.” Beginning with the GoodReads Choice Award Romance Finalist Fifty Sh...</newsBody>
+        </book>
+        <book id="7">
+            <newsName> Design Patterns : Elements of Reusable Object-Oriented Software</newsName>
+            <provider authors="Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides">Addison-Wesley Professional; 1 edition (November 10, 1994)</provider>
+            <dateOfIssue>1994</dateOfIssue>
+            <newsBody>Capturing a wealth of experience about the design of object-oriented software, four top-notch designers present a catalog of simple and succinct solutions to commonly occurring desi...</newsBody>
+        </book>
+    </newsItem>
+    <newsItem category="unknown">
+        <cd id="8">
+            <newsName> some CD title </newsName>
+            <provider>some CD provider</provider>
+            <dateOfIssue>1917</dateOfIssue>
+            <newsBody>not really new...</newsBody>
+        </cd>
+        <cd id="9">
+            <newsName>unknown</newsName>
+            <provider author="unknown">some CD provider</provider>
+            <dateOfIssue>1905</dateOfIssue>
+            <newsBody>not really new...</newsBody>
+        </cd>
+    </newsItem>
+</ns2:news>
