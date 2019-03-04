@@ -1,24 +1,25 @@
 
-package by.htp.basumatarau.normalCatalog.generatedEntities;
+package by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Objects;
 
 
 /**
- * <p>Java class for Book complex type.
+ * <p>Java class for NewsSubCategory complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Book"&gt;
+ * &lt;complexType name="NewsSubCategory"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;group ref="{http://by.htp.basumatarau.normalCatalog/news}newsContent"/&gt;
- *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -27,14 +28,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Book", propOrder = {
+@XmlType(name = "NewsSubCategory", propOrder = {
+    "id",
     "newsName",
     "provider",
     "dateOfIssue",
     "newsBody"
 })
-public class Book {
+public class NewsSubCategory {
 
+    protected int id;
     @XmlElement(required = true)
     protected String newsName;
     @XmlElement(required = true)
@@ -43,8 +46,24 @@ public class Book {
     protected String dateOfIssue;
     @XmlElement(required = true)
     protected String newsBody;
-    @XmlAttribute(name = "id", required = true)
-    protected int id;
+    @XmlAttribute(name = "name", required = true)
+    protected String name;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(int value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the newsName property.
@@ -143,64 +162,60 @@ public class Book {
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the name property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the name property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setId(int value) {
-        this.id = value;
+    public void setName(String value) {
+        this.name = value;
+    }
+
+    @Override
+    public String toString(){
+        return "subCategory: " + this.getName()
+                + ", issued: " + this.getDateOfIssue()
+                + ", provided " + this.getProvider()
+                + ", news title: " + this.getNewsName()
+                + ", article: " + this.getNewsBody();
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
+        int prime = 31;
         int result = 1;
-        result = prime * result + ((newsBody == null) ? 0 : newsBody.hashCode());
+        result = prime * result + ((newsName == null) ? 0 : newsName.hashCode());
         result = prime * result + ((provider == null) ? 0 : provider.hashCode());
         result = prime * result + ((dateOfIssue == null) ? 0 : dateOfIssue.hashCode());
         result = prime * result + ((newsBody == null) ? 0 : newsBody.hashCode());
-        result = prime * result + id;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Movie other = (Movie) obj;
-        if (newsName == null) {
-            if (other.newsName != null)
-                return false;
-        } else if (!newsName.equals(other.newsName))
-            return false;
-        if (provider == null) {
-            if (other.provider != null)
-                return false;
-        } else if (!provider.equals(other.provider))
-            return false;
-        if (dateOfIssue == null) {
-            if (other.dateOfIssue != null)
-                return false;
-        } else if (!dateOfIssue.equals(other.dateOfIssue))
-            return false;
-        if (newsBody == null) {
-            if (other.newsBody != null)
-                return false;
-        } else if (!newsBody.equals(other.newsBody))
-            return false;
-        if (id != other.id)
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NewsSubCategory that = (NewsSubCategory) o;
+        return id == that.id &&
+                Objects.equals(newsName, that.newsName) &&
+                Objects.equals(provider, that.provider) &&
+                Objects.equals(dateOfIssue, that.dateOfIssue) &&
+                Objects.equals(newsBody, that.newsBody) &&
+                Objects.equals(name, that.name);
     }
 }

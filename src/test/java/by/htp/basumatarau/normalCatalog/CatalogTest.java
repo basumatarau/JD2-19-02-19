@@ -3,43 +3,43 @@ package by.htp.basumatarau.normalCatalog;
 import org.junit.Test;
 
 import by.htp.basumatarau.normalCatalog.services.INewsService;
-import by.htp.basumatarau.normalCatalog.services.NewsService;
-import by.htp.basumatarau.normalCatalog.DAO.impl.EntitySerializer;
-import by.htp.basumatarau.normalCatalog.generatedEntities.Movie;
-import by.htp.basumatarau.normalCatalog.generatedEntities.NewsItem;
-import by.htp.basumatarau.normalCatalog.generatedEntities.ObjectFactory;
-import by.htp.basumatarau.normalCatalog.generatedEntities.Provider;
+import by.htp.basumatarau.normalCatalog.services.impl.NewsService;
+import by.htp.basumatarau.normalCatalog.DAO.impl.EntitySerializerImpl;
+import by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities.*;
+import by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities.Provider;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class CatalogTest {
-	private static final String testXmlFile;
-	private static final String testXmlOut;
-	private static final String marshTestXmlOut;
-	private static final String searshTestXmlOut;
-	
-	
+
+	private static final String DATABASE;
+	private static final String UNMARSHALLING_TEST_OUT;
+	private static final String SERVICE_TEST_OUT;
+	private static final String LOOKUP_TEST_OUT;
+
 	static {
-		testXmlFile = "testXmlFile.xml";
-		testXmlOut = "testXmlOut.xml";
-		marshTestXmlOut = "marshTestXmlOut.xml";
-		searshTestXmlOut = "searchXmlOut.xml";
+		DATABASE = "DATABASE.xml";
+		UNMARSHALLING_TEST_OUT = "UNMARSHALLING_TEST_OUT.xml";
+		SERVICE_TEST_OUT = "SERVICE_TEST_OUT.xml";
+		LOOKUP_TEST_OUT = "LOOKUP_TEST_OUT.xml";
 	}
 	
 	@Test
 	public void marshallingTest() throws FileNotFoundException {
 		System.out.println("-------------marshalling test-------------");
-		List<NewsItem> newsItems = new EntitySerializer().deserializeEntitiesFromXml(new FileReader(testXmlFile));
-		for(NewsItem newsItem : newsItems) {
-			System.out.println(newsItem.getCategory());
-			for(Object elem : newsItem.getMovieOrBookOrCd()) {
-				System.out.println(elem);
+		List<NewsCategory> categories = new EntitySerializerImpl().deserializeEntitiesFromXml(new FileReader(DATABASE));
+		for(NewsCategory category : categories) {
+			System.out.println(category.getCategoryName());
+			for(NewsSubCategory subCategory : category.getNewsSubCategory()) {
+				System.out.println(subCategory.getNewsName());
 			}
 		}
 	}
@@ -48,37 +48,66 @@ public class CatalogTest {
 	public void unmarshallingTest() throws IOException {
 		System.out.println("-------------unmarshalling test---------------");
 		ObjectFactory of = new ObjectFactory();
-		Movie movie = of.createMovie();
-		movie.setDateOfIssue("date");
-		movie.setId(25);
-		movie.setNewsBody("newsBody");
-		movie.setNewsName("movie_name");
+		NewsCategory newsCategory = of.createNewsCategory();
+		NewsSubCategory newsSubCategory = of.createNewsSubCategory();
+		newsSubCategory.setId(25);
+		newsSubCategory.setName("for kids");
+		newsSubCategory.setDateOfIssue(new SimpleDateFormat("dd/mm/yyyy").format(new Date()));
+		newsSubCategory.setNewsBody("some news body");
+		newsSubCategory.setNewsName("movie premiere");
 		Provider prov = of.createProvider();
 		prov.setAuthor("author");
-		prov.setValue("providerValue");
-		movie.setProvider(prov);
-		NewsItem ni = of.createNewsItem();
-		ni.getMovieOrBookOrCd().add(movie);
-		ni.setCategory("kids");
-	
-		System.out.println(marshTestXmlOut);
+		prov.setValue("provider name");
+		newsSubCategory.setProvider(prov);
+		newsCategory.setCategoryName("movie");
+		newsCategory.getNewsSubCategory().add(newsSubCategory);
+
+		System.out.println(UNMARSHALLING_TEST_OUT);
 		
-		new EntitySerializer().serializeEntitiesToXml(new FileWriter("marshTestXmlOut.xml"), Arrays.asList(ni));
+		new EntitySerializerImpl().serializeEntitiesToXml(new FileWriter(UNMARSHALLING_TEST_OUT), Arrays.asList(newsCategory));
 	}
 	
 	@Test
 	public void serviceTest() {
+		System.out.println("-------------service test---------------");
 		INewsService service = new NewsService();
-		service.saveNews(new File(testXmlFile), new File(testXmlOut));
+		service.saveNews(new File(DATABASE), new File(SERVICE_TEST_OUT));
 	}
 	
-	//usage:  --name  --provider --issue --body 'search word'
+	//usage:  --name 'search word' --provider 'search word' --issue 'search word' --body 'search word' --category 'search word'
 	@Test
 	public void serviceLookUpTest() {
 		System.out.println("-------------look-up test---------------");
 		INewsService service = new NewsService();
-		service.lookUpNews(" --issue '2017' ", new File(testXmlFile), new File(searshTestXmlOut));
-		service.lookUpNews(" --body 'experience about the design' ", new File(testXmlFile), new File(searshTestXmlOut));
-		service.lookUpNews(" --provider 'Scribner (September 30, 2004)' ", new File(testXmlFile), new File(searshTestXmlOut));
+
+
+		System.out.println("\n\nlookup query: \" --issue '2017' --name 'Logan' \"");
+		service.lookUpNews(" --issue '2017' --name 'Logan' ", new File(DATABASE), new File(LOOKUP_TEST_OUT));
+		displayTxtFile(LOOKUP_TEST_OUT);
+
+
+		System.out.println("\n\nlookup query: \" --body 'experience about the design' \"");
+		service.lookUpNews(" --body 'experience about the design' ", new File(DATABASE), new File(LOOKUP_TEST_OUT));
+		displayTxtFile(LOOKUP_TEST_OUT);
+
+		System.out.println("\n\nlookup query: \" --provider 'Scribner (September 30, 2004)' \"");
+		service.lookUpNews(" --provider 'Scribner (September 30, 2004)' ", new File(DATABASE), new File(LOOKUP_TEST_OUT));
+		displayTxtFile(LOOKUP_TEST_OUT);
+
+		System.out.println("\n\nlookup query: \" --category 'movie' \"");
+		service.lookUpNews(" --category 'movie' ", new File(DATABASE), new File(LOOKUP_TEST_OUT));
+		displayTxtFile(LOOKUP_TEST_OUT);
 	}
+
+	private static void displayTxtFile(String strPath){
+		try{
+			Path path = Paths.get(strPath);
+			for(String line : Files.readAllLines(path, StandardCharsets.UTF_8)){
+				System.out.println(line);
+			}
+		}catch (IOException e){
+			throw new RuntimeException(e);
+		}
+	}
+
 }

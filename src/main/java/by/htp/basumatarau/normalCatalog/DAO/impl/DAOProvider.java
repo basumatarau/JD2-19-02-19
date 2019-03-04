@@ -1,14 +1,14 @@
-package by.htp.basumatarau.normalCatalog.DAO;
+package by.htp.basumatarau.normalCatalog.DAO.impl;
 
-import by.htp.basumatarau.normalCatalog.DAO.impl.NewsDAO;
-import by.htp.basumatarau.normalCatalog.generatedEntities.NewsItem;
+import by.htp.basumatarau.normalCatalog.DAO.IDAO;
+import by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities.NewsCategory;
 
 public class DAOProvider {
 	
 	private static DAOProvider daoInstance;
-	private NewsDAO news;
+	private IDAO<NewsCategory, String> news;
 		
-	public IDAO<NewsItem, String> getNewsDao(){
+	public IDAO<NewsCategory, String> getNewsDao(){
 		return news;
 	}
 	
@@ -18,7 +18,7 @@ public class DAOProvider {
 			synchronized(DAOProvider.class) {
 				if(daoInstance == null) {
 					daoInstance = new DAOProvider();
-					daoInstance.news = new NewsDAO();
+					daoInstance.news = new NewsDAOImpl();
 				}
 			}
 		}

@@ -11,46 +11,41 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import by.htp.basumatarau.normalCatalog.generatedEntities.ObjectFactory;
-import by.htp.basumatarau.normalCatalog.generatedEntities.News;
-import by.htp.basumatarau.normalCatalog.generatedEntities.NewsItem;
+import by.htp.basumatarau.normalCatalog.DAO.IEntitySerializer;
+import by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities.*;
 
-public class EntitySerializer {
-	private static final String entityPackageName = "by.htp.basumatarau.normalCatalog.generatedEntities";
+public class EntitySerializerImpl implements IEntitySerializer {
+	private static final String entityPackageName = "by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities";
 	private static final ObjectFactory of = new ObjectFactory();
 	
-	public List<NewsItem> deserializeEntitiesFromXml(Reader xmlInput) {
-		List<NewsItem> newsItems = new ArrayList<>();
-
+	public List<NewsCategory> deserializeEntitiesFromXml(Reader xmlInput) {
+		List<NewsCategory> newsItems = new ArrayList<>();
 		try {
-
 			if(!xmlInput.ready()){
 				return newsItems;
 			}
-
 			JAXBContext context = JAXBContext.newInstance(entityPackageName);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			
 			News news = (News)unmarshaller.unmarshal(xmlInput); 
-			newsItems = news.getNewsItem();
-
+			newsItems = news.getNewsCategory();
 		} catch (JAXBException | IOException e) {
-			System.out.println("JAXB failure " + e.getMessage());
+			System.out.println("serialization failure " + e.getMessage());
 			throw new RuntimeException(e);
 		} 
 		
 		return newsItems;
 	}
 	
-	public void serializeEntitiesToXml(Writer xmlOut, List<NewsItem> newsItems) {
+	public void serializeEntitiesToXml(Writer xmlOut, List<NewsCategory> newsItems) {
 		try {
 			JAXBContext context = JAXBContext.newInstance(entityPackageName);
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			News news = of.createNews();
 			
-			for(NewsItem item : newsItems) {
-				news.getNewsItem().add(item);
+			for(NewsCategory item : newsItems) {
+				news.getNewsCategory().add(item);
 			}
 			marshaller.marshal(news, xmlOut);
 		} catch (JAXBException e) {
@@ -59,20 +54,12 @@ public class EntitySerializer {
 		}
 	}
 	
-	public List<Object> getNewsItemContent(NewsItem newsItem){
-		List<Object> result = new ArrayList<>();
-		for(Object item : newsItem.getMovieOrBookOrCd()){
-			result.add(item);
+	public NewsCategory makeNewsCategory(List<NewsSubCategory> categoryContent, String categoryName){
+		NewsCategory result = of.createNewsCategory();
+		for(NewsSubCategory item : categoryContent) {
+			result.getNewsSubCategory().add(item);
 		}
-		return result;
-	}
-	
-	public NewsItem getNewsItem(List<Object> contents, String category){
-		NewsItem result = of.createNewsItem();
-		for(Object item : contents) {
-			result.getMovieOrBookOrCd().add(item);
-		}
-		result.setCategory(category);
+		result.setCategoryName(categoryName);
 		return result;
 	}
 }

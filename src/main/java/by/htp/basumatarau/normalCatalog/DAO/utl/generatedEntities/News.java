@@ -1,5 +1,5 @@
 
-package by.htp.basumatarau.normalCatalog.generatedEntities;
+package by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence maxOccurs="unbounded"&gt;
- *         &lt;element name="newsItem" type="{http://by.htp.basumatarau.normalCatalog/news}NewsItem"/&gt;
+ *         &lt;element name="newsCategory" type="{http://by.htp.basumatarau.normalCatalog/news}NewsCategory"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -31,41 +31,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "newsItem"
+    "newsCategory"
 })
 @XmlRootElement(name = "news")
 public class News {
 
     @XmlElement(required = true)
-    protected List<NewsItem> newsItem;
+    protected List<NewsCategory> newsCategory;
 
     /**
-     * Gets the value of the newsItem property.
+     * Gets the value of the newsCategory property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the newsItem property.
+     * This is why there is not a <CODE>set</CODE> method for the newsCategory property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getNewsItem().add(newItem);
+     *    makeNewsCategory().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link NewsItem }
+     * {@link NewsCategory }
      * 
      * 
      */
-    public List<NewsItem> getNewsItem() {
-        if (newsItem == null) {
-            newsItem = new ArrayList<NewsItem>();
+    public List<NewsCategory> getNewsCategory() {
+        if (newsCategory == null) {
+            newsCategory = new ArrayList<NewsCategory>();
         }
-        return this.newsItem;
+        return this.newsCategory;
     }
 
 }

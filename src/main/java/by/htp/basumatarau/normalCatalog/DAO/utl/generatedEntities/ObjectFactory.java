@@ -1,5 +1,5 @@
 
-package by.htp.basumatarau.normalCatalog.generatedEntities;
+package by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the by.htp.basumatarau.normalCatalog.generatedEntities package. 
+ * generated in the by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities package.
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -23,7 +23,7 @@ public class ObjectFactory {
 
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: by.htp.basumatarau.normalCatalog.generatedEntities
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities
      * 
      */
     public ObjectFactory() {
@@ -38,35 +38,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link NewsItem }
+     * Create an instance of {@link NewsCategory }
      * 
      */
-    public NewsItem createNewsItem() {
-        return new NewsItem();
+    public NewsCategory createNewsCategory() {
+        return new NewsCategory();
     }
 
     /**
-     * Create an instance of {@link Movie }
+     * Create an instance of {@link NewsSubCategory }
      * 
      */
-    public Movie createMovie() {
-        return new Movie();
-    }
-
-    /**
-     * Create an instance of {@link Book }
-     * 
-     */
-    public Book createBook() {
-        return new Book();
-    }
-
-    /**
-     * Create an instance of {@link CD }
-     * 
-     */
-    public CD createCD() {
-        return new CD();
+    public NewsSubCategory createNewsSubCategory() {
+        return new NewsSubCategory();
     }
 
     /**

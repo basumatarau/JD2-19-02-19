@@ -1,51 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://by.htp.basumatarau.normalCatalog/news"
-	xmlns:tns="http://by.htp.basumatarau.normalCatalog/news">
+		targetNamespace="http://by.htp.basumatarau.normalCatalog/news"
+		xmlns:tns="http://by.htp.basumatarau.normalCatalog/news">
 
 	<element name="news">
 		<complexType>
-			<sequence minOccurs="1" maxOccurs="unbounded">
-				<element name="newsItem" type="tns:NewsItem"></element>
-			</sequence>	
+			<sequence maxOccurs="unbounded">
+				<element name="newsCategory" type="tns:NewsCategory"/>
+			</sequence>
 		</complexType>
 	</element>
-	
-	<complexType name="NewsItem">
-		<sequence minOccurs="1" maxOccurs="unbounded">
-			<choice>
-				<element name="movie" type="tns:Movie" />
-				<element name="book" type="tns:Book" />
-				<element name="cd" type="tns:CD" />
-			</choice>
+
+	<complexType name="NewsCategory">
+		<sequence maxOccurs="unbounded">
+			<element name="newsSubCategory" type="tns:NewsSubCategory"/>
 		</sequence>
-		<attribute name="category" type="string" use="required" />
-	</complexType>
-	
-	<complexType name="Movie">
-		<group ref="tns:newsContent" />
-		<attribute name="id" type="int" use="required" />
-	</complexType>
-	
-	<complexType name="Book">
-		<group ref="tns:newsContent" />
-		<attribute name="id" type="int" use="required" />
+		<attribute ref="tns:categoryName"/>
 	</complexType>
 
-	<complexType name="CD">
+	<attribute name="categoryName">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="movie"/>
+				<enumeration value="book"/>
+				<enumeration value="cd"/>
+			</restriction>
+		</simpleType>
+	</attribute>
+
+	<complexType name="NewsSubCategory">
 		<group ref="tns:newsContent" />
-		<attribute name="id" type="int" use="required" />
+		<attribute name="name" type="string" use="required" />
 	</complexType>
 
 	<group name="newsContent">
 		<sequence>
+			<element name="id" type="int" />
 			<element name="newsName" type="string" />
 			<element name="provider" type="tns:Provider" />
 			<element name="dateOfIssue" type="string" />
 			<element name="newsBody" type="string" />
 		</sequence>
 	</group>
-	
+
 	<complexType name="Provider">
 		<simpleContent>
 			<extension base="string">
@@ -54,5 +51,5 @@
 			</extension>
 		</simpleContent>
 	</complexType>
-	
+
 </schema>

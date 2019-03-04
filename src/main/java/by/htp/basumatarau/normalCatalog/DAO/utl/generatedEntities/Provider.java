@@ -1,11 +1,12 @@
 
-package by.htp.basumatarau.normalCatalog.generatedEntities;
+package by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
+import java.util.Objects;
 
 
 /**
@@ -111,4 +112,23 @@ public class Provider {
         this.authors = value;
     }
 
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + ((author == null) ? 0 : author.hashCode());
+        result = prime * result + ((authors == null) ? 0 : authors.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Provider that = (Provider) o;
+        return  Objects.equals(value, that.value) &&
+                Objects.equals(author, that.author) &&
+                Objects.equals(authors, that.authors);
+    }
 }
