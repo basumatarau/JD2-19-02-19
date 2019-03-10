@@ -1,4 +1,4 @@
-package by.htp.basumatarau.normalCatalog.DAO.impl;
+package by.htp.basumatarau.normalCatalog.dao.impl;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -11,14 +11,15 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import by.htp.basumatarau.normalCatalog.DAO.IEntitySerializer;
-import by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities.*;
+import by.htp.basumatarau.normalCatalog.dao.EntitySerializer;
+import by.htp.basumatarau.normalCatalog.dao.utl.generatedEntities.*;
+import by.htp.basumatarau.normalCatalog.exception.DAOException;
 
-public class EntitySerializerImpl implements IEntitySerializer {
-	private static final String entityPackageName = "by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities";
+public class EntitySerializerImpl implements EntitySerializer {
+	private static final String entityPackageName = "by.htp.basumatarau.normalCatalog.dao.utl.generatedEntities";
 	private static final ObjectFactory of = new ObjectFactory();
 	
-	public List<NewsCategory> deserializeEntitiesFromXml(Reader xmlInput) {
+	public List<NewsCategory> deserializeEntitiesFromXml(Reader xmlInput) throws DAOException {
 		List<NewsCategory> newsItems = new ArrayList<>();
 		try {
 			if(!xmlInput.ready()){
@@ -31,13 +32,13 @@ public class EntitySerializerImpl implements IEntitySerializer {
 			newsItems = news.getNewsCategory();
 		} catch (JAXBException | IOException e) {
 			System.out.println("serialization failure " + e.getMessage());
-			throw new RuntimeException(e);
+			throw new DAOException(e);
 		} 
 		
 		return newsItems;
 	}
 	
-	public void serializeEntitiesToXml(Writer xmlOut, List<NewsCategory> newsItems) {
+	public void serializeEntitiesToXml(Writer xmlOut, List<NewsCategory> newsItems) throws DAOException {
 		try {
 			JAXBContext context = JAXBContext.newInstance(entityPackageName);
 			Marshaller marshaller = context.createMarshaller();
@@ -50,7 +51,7 @@ public class EntitySerializerImpl implements IEntitySerializer {
 			marshaller.marshal(news, xmlOut);
 		} catch (JAXBException e) {
 			System.out.println("JAXB failure " + e.getMessage());
-			throw new RuntimeException(e);
+			throw new DAOException(e);
 		}
 	}
 	

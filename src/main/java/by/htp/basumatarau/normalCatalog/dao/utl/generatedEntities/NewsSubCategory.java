@@ -1,5 +1,5 @@
 
-package by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities;
+package by.htp.basumatarau.normalCatalog.dao.utl.generatedEntities;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

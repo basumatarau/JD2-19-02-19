@@ -1,17 +1,20 @@
-package by.htp.basumatarau.normalCatalog.DAO.impl;
+package by.htp.basumatarau.normalCatalog.dao.impl;
 
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import by.htp.basumatarau.normalCatalog.DAO.IDAO;
-import by.htp.basumatarau.normalCatalog.DAO.utl.generatedEntities.*;
+import by.htp.basumatarau.normalCatalog.dao.DAO;
+import by.htp.basumatarau.normalCatalog.dao.EntitySerializer;
+import by.htp.basumatarau.normalCatalog.dao.utl.generatedEntities.*;
+import by.htp.basumatarau.normalCatalog.exception.DAOException;
 
-public class NewsDAOImpl extends AbstractDAO implements IDAO<NewsCategory, String> {
+public class NewsDAOImpl implements DAO<NewsCategory, String> {
+	private static String DATABASE = "DATABASE.xml";
+	private static EntitySerializer serializer = new EntitySerializerImpl();
 
 	private enum LOOK_UP_OPTS {
 		BY_NEWS_NAME, BY_PROVIDER, BY_DATE_OF_ISSUE, BY_NEWS_BODY, BY_CATEGORY;
@@ -51,15 +54,51 @@ public class NewsDAOImpl extends AbstractDAO implements IDAO<NewsCategory, Strin
     }
 	
 	@Override
-	public void persist(List<NewsCategory> entities, Writer xmlOut) {
-		getSerializer().serializeEntitiesToXml(xmlOut, entities);
+	public void persist(List<NewsCategory> entities) throws DAOException {
+		entities.addAll(readAll());
+
+		try (FileWriter fileWriter = new FileWriter(DATABASE)) {
+			serializer.serializeEntitiesToXml(fileWriter, entities);
+		}catch (IOException e){
+			throw new DAOException(e);
+		}
 	}
 
 	@Override
-	public List<NewsCategory> read(Reader xmlIn) {
-        return getSerializer().deserializeEntitiesFromXml(xmlIn);
+	public List<NewsCategory> read(String id) throws DAOException {
+		List<NewsCategory> result;
+		try (FileReader fileReader = new FileReader(DATABASE)){
+			result = serializer.deserializeEntitiesFromXml(fileReader);
+		}catch (IOException e){
+			throw new DAOException(e);
+		}
+
+		for (NewsCategory newsCategory : result) {
+			removeNotMatchingSubCategories(newsCategory, id);
+		}
+
+		return result;
 	}
-	
+
+	private void removeNotMatchingSubCategories(NewsCategory newsCategory, String id) {
+		for (NewsSubCategory newsSubCategory : newsCategory.getNewsSubCategory()) {
+			if(!id.equals(newsSubCategory.getId() + "")){
+				newsCategory.getNewsSubCategory().remove(newsSubCategory);
+			}
+		}
+	}
+
+	@Override
+	public List<NewsCategory> readAll() throws DAOException {
+		List<NewsCategory> result;
+		try (FileReader fileReader = new FileReader(DATABASE)){
+			result = serializer.deserializeEntitiesFromXml(fileReader);
+		}catch (IOException e){
+			throw new DAOException(e);
+		}
+		return result;
+	}
+
 	//criteria pattern:  --name 'search word' --provider 'search word' --issue 'search word' --body 'search word' --category 'search word'
 	private EnumSet<LOOK_UP_OPTS> optionsResolver(String criteria){
 		String regexpRequest = "^((((\\s*--name\\s*)(\\s*[\"'](.*?)[\"']\\s*)?)|((\\s*--provider\\s*)(\\s*[\"'](.*?)[\"']\\s*)?)|((\\s*--issue\\s*)(\\s*[\"'](.*?)[\"']\\s*)?)|((\\s*--body\\s*)(\\s*[\"'](.*?)[\"']\\s*)?)|((\\s*--category\\s*)(\\s*[\"'](.*?)[\"']\\s*)?)){1,5})";
@@ -94,8 +133,15 @@ public class NewsDAOImpl extends AbstractDAO implements IDAO<NewsCategory, Strin
 	}
 	
 	@Override
-	public List<NewsCategory> lookUp(Reader xmlInput, String criteria) {
-		List<NewsCategory> lookUpBase = getSerializer().deserializeEntitiesFromXml(xmlInput);
+	public List<NewsCategory> lookUp(String criteria) throws DAOException {
+		List<NewsCategory> lookUpBase;
+
+		try {
+			lookUpBase = serializer.deserializeEntitiesFromXml(new FileReader(DATABASE));
+		}catch (IOException e){
+			throw new DAOException(e);
+		}
+
 		EnumSet<LOOK_UP_OPTS> opts = optionsResolver(criteria);
 
 		List<NewsCategory> lookUpResponse = new ArrayList<>();
@@ -103,7 +149,6 @@ public class NewsDAOImpl extends AbstractDAO implements IDAO<NewsCategory, Strin
 		for(NewsCategory category : lookUpBase) {
 			List<NewsSubCategory> matchedContent = new ArrayList<>();
 			for(NewsSubCategory newsItem : category.getNewsSubCategory()) {
-				boolean matched = false;
 
 				if(opts.contains(LOOK_UP_OPTS.BY_NEWS_NAME)) {
 					if (newsItem.getNewsName().contains(LOOK_UP_OPTS.BY_NEWS_NAME.getLookUpWord())) {
@@ -136,7 +181,7 @@ public class NewsDAOImpl extends AbstractDAO implements IDAO<NewsCategory, Strin
 				}
 			}
 			if(!matchedContent.isEmpty()) {
-				lookUpResponse.add(getSerializer().makeNewsCategory(matchedContent, category.getCategoryName()));
+				lookUpResponse.add(serializer.makeNewsCategory(matchedContent, category.getCategoryName()));
 			}
 		}
 		return lookUpResponse;
