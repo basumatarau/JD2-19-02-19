@@ -1,5 +1,5 @@
 
-package by.htp.basumatarau.normalCatalog.dao.utl.generatedEntities;
+package by.htp.basumatarau.normalCatalog.dao.util.generatedEntities;
 
 import java.util.ArrayList;
 import java.util.List;

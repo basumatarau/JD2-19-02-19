@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:news xmlns:ns2="http://by.htp.basumatarau.normalCatalog/news">
+    <newsCategory ns2:categoryName="movie">
+        <newsSubCategory name="some wired subcategory name">
+            <id>10</id>
+            <newsName>bla bla name</newsName>
+            <provider author="bla bla author">bla bla provider</provider>
+            <dateOfIssue>2017</dateOfIssue>
+            <newsBody></newsBody>
+        </newsSubCategory>
+    </newsCategory>
+    <newsCategory ns2:categoryName="book">
+        <newsSubCategory name="test subcategory">
+            <id>11</id>
+            <newsName>test name</newsName>
+            <provider author="test author name">test provider name</provider>
+            <dateOfIssue>2019</dateOfIssue>
+            <newsBody>test news body</newsBody>
+        </newsSubCategory>
+    </newsCategory>
+    <newsCategory ns2:categoryName="cd">
+        <newsSubCategory name="another test subcategory">
+            <id>12</id>
+            <newsName>another test name</newsName>
+            <provider author="another author">another test provider</provider>
+            <dateOfIssue>2018</dateOfIssue>
+            <newsBody>another test news body</newsBody>
+        </newsSubCategory>
+    </newsCategory>
+</ns2:news>

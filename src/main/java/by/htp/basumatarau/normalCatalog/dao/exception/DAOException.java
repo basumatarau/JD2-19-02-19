@@ -1,4 +1,4 @@
-package by.htp.basumatarau.normalCatalog.exception;
+package by.htp.basumatarau.normalCatalog.dao.exception;
 
 public class DAOException extends Exception {
     public DAOException(){
@@ -7,6 +7,10 @@ public class DAOException extends Exception {
 
     public DAOException(Exception e){
         super(e);
+    }
+
+    public DAOException(String msg, Exception e){
+        super(msg, e);
     }
 }
 

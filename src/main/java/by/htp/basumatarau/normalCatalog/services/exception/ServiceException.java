@@ -1,4 +1,4 @@
-package by.htp.basumatarau.normalCatalog.exception;
+package by.htp.basumatarau.normalCatalog.services.exception;
 
 public class ServiceException extends Exception {
     public ServiceException(){

@@ -1,4 +1,4 @@
-package by.htp.basumatarau.normalCatalog.dao.utl;
+package by.htp.basumatarau.normalCatalog.dao.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -17,7 +17,7 @@ import com.sun.tools.xjc.api.XJC;
 public class XjcEntityGenerator {
 	private static final String schemaFile;
 	private static final String targetPath;
-	private static final String entityPackageName = "by.htp.basumatarau.normalCatalog.dao.utl.generatedEntities";
+	private static final String entityPackageName = "by.htp.basumatarau.normalCatalog.dao.util.generatedEntities";
 
 	static {
 		schemaFile = XjcEntityGenerator.class
@@ -47,7 +47,7 @@ public class XjcEntityGenerator {
 	}
 
 	public static JCodeModel generateFromSchema(final File schemaFile, final String packageName,
-												final File targetPath) throws IOException, FileNotFoundException {
+												final File targetPath) throws IOException {
 
 
 		final SchemaCompiler sc = XJC.createSchemaCompiler();
