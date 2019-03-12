@@ -10,5 +10,5 @@ public interface DAO<T, Id extends Serializable> {
 	void persist(List<T> entity) throws DAOException;
 	List<T> read(Id id) throws DAOException;
 	List<T> readAll() throws DAOException;
-	List<T> lookUp(Criteria criteria) throws DAOException;
+	<R> List<T> lookUp(Criteria<R> criteria) throws DAOException;
 }

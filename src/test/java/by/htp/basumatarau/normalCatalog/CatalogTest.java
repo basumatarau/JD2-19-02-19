@@ -33,18 +33,21 @@ public class CatalogTest {
 		NewsService service = new NewsServiceImpl();
 
 		System.out.println("\n\n\t\t\tlookup query (match any): \" --issue '2017' --name 'Logan' \"\n");
-		service.lookUpNews(System.out, new Criteria(Criteria.CriteriaType.MATCH_ANY)
+		service.lookUpNews(System.out, new Criteria<>(LookUpOpts.class, Criteria.Matcher.MATCH_ALL)
 				.add(LookUpOpts.BY_CATEGORY, "movie")
 				.add(LookUpOpts.BY_NEWS_NAME, "Logan")
 				.add(LookUpOpts.BY_DATE_OF_ISSUE, "2017")
 		);
 
+
 		System.out.println("\n\n\t\t\tlookup query (match all): \" --issue '2017' --name 'Logan' \"\n");
-		service.lookUpNews(System.out, new Criteria(Criteria.CriteriaType.MATCH_ALL)
+		service.lookUpNews(System.out, new Criteria<>(LookUpOpts.class, Criteria.Matcher.MATCH_ANY)
 				.add(LookUpOpts.BY_CATEGORY, "movie")
 				.add(LookUpOpts.BY_NEWS_NAME, "Logan")
 				.add(LookUpOpts.BY_DATE_OF_ISSUE, "2017")
 		);
+
+
 	}
 
 }

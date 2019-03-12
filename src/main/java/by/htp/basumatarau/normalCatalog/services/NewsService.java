@@ -8,5 +8,5 @@ import java.io.PrintStream;
 
 public interface NewsService {
 	void saveNews(File xmlIn) throws ServiceException;
-	void lookUpNews(PrintStream xmlOut, Criteria criteria) throws ServiceException;
+	<R> void lookUpNews(PrintStream xmlOut, Criteria<R> criteria) throws ServiceException;
 }

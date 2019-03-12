@@ -7,6 +7,7 @@ import java.util.List;
 import by.htp.basumatarau.normalCatalog.dao.DAO;
 import by.htp.basumatarau.normalCatalog.dao.EntitySerializer;
 import by.htp.basumatarau.normalCatalog.dao.util.criteria.Criteria;
+import by.htp.basumatarau.normalCatalog.dao.util.criteria.LookUpOpts;
 import by.htp.basumatarau.normalCatalog.dao.util.generatedEntities.*;
 import by.htp.basumatarau.normalCatalog.dao.exception.DAOException;
 
@@ -68,7 +69,7 @@ public class NewsDAOImpl implements DAO<NewsCategory, String> {
 
 
 	@Override
-	public List<NewsCategory> lookUp(Criteria criteria) throws DAOException {
+	public <R> List<NewsCategory> lookUp(Criteria<R> criteria) throws DAOException {
 		List<NewsCategory> lookUpBase;
 
 		try {
@@ -76,7 +77,6 @@ public class NewsDAOImpl implements DAO<NewsCategory, String> {
 		}catch (IOException e){
 			throw new DAOException(e);
 		}
-
 		List<NewsCategory> lookUpResponse = new ArrayList<>();
 
 		for(NewsCategory category : lookUpBase) {
@@ -89,7 +89,18 @@ public class NewsDAOImpl implements DAO<NewsCategory, String> {
 		return lookUpResponse;
 	}
 
-	private List<NewsSubCategory> selectMatchedContent(Criteria criteria, NewsCategory category) {
+	private List<NewsSubCategory> selectMatchedContent(Criteria<?> crit, NewsCategory category)
+			throws DAOException {
+
+		if(!crit.getCriteriaMatchType().equals(LookUpOpts.class)){
+			throw new DAOException("criteria mismatch");
+		}
+
+		//generic type has been checked in the previous statement
+		//DAOException on type mismatch prevents ClassCastException to be thrown below
+		@SuppressWarnings("unchecked")
+		Criteria<LookUpOpts> criteria = (Criteria<LookUpOpts>) crit;
+
 		List<NewsSubCategory> matchedContent = new ArrayList<>();
 		for(NewsSubCategory newsItem : category.getNewsSubCategory()) {
 
@@ -97,26 +108,36 @@ public class NewsDAOImpl implements DAO<NewsCategory, String> {
 			if((searchWord = criteria.get(BY_NEWS_NAME))!=null) {
 				if (newsItem.getNewsName().contains(searchWord)) {
 					criteria.matched(BY_NEWS_NAME);
+				}else{
+					criteria.notMatched(BY_NEWS_NAME);
 				}
 			}
 			if((searchWord = criteria.get(BY_PROVIDER))!=null) {
 				if (newsItem.getProvider().getValue().contains(searchWord)) {
 					criteria.matched(BY_PROVIDER);
+				}else{
+					criteria.notMatched(BY_PROVIDER);
 				}
 			}
 			if((searchWord = criteria.get(BY_NEWS_BODY))!=null) {
 				if (newsItem.getNewsBody().contains(searchWord)) {
 					criteria.matched(BY_NEWS_BODY);
+				}else{
+					criteria.notMatched(BY_NEWS_BODY);
 				}
 			}
 			if((searchWord = criteria.get(BY_DATE_OF_ISSUE))!=null) {
 				if (newsItem.getDateOfIssue().contains(searchWord)) {
 					criteria.matched(BY_DATE_OF_ISSUE);
+				}else{
+					criteria.notMatched(BY_DATE_OF_ISSUE);
 				}
 			}
 			if((searchWord = criteria.get(BY_CATEGORY))!=null) {
-				if (newsItem.getName().contains(searchWord)) {
+				if (category.getCategoryName().contains(searchWord)) {
 					criteria.matched(BY_CATEGORY);
+				}else {
+					criteria.notMatched(BY_CATEGORY);
 				}
 			}
 			if(criteria.satisfied()) {
