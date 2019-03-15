@@ -14,6 +14,10 @@ import by.htp.basumatarau.normalCatalog.dao.exception.DAOException;
 import static by.htp.basumatarau.normalCatalog.dao.util.criteria.LookUpOpts.*;
 
 public class NewsDAOImpl implements DAO<NewsCategory, String> {
+
+	//for this particular implementation the database is just a plain xml file;
+	//whenever dao layer gets request to fetch/persist data it hits the database,
+	//and only the dao layer "knows" how and where the data is stored (for this case directly in an xml file)
 	private static String DATABASE = "DATABASE.xml";
 	private static EntitySerializer serializer = new EntitySerializerImpl();
 
@@ -96,7 +100,7 @@ public class NewsDAOImpl implements DAO<NewsCategory, String> {
 			throw new DAOException("criteria mismatch");
 		}
 
-		//generic type has been checked in the previous statement
+		//the generic type has been checked in the previous statement
 		//DAOException on type mismatch prevents ClassCastException to be thrown below
 		@SuppressWarnings("unchecked")
 		Criteria<LookUpOpts> criteria = (Criteria<LookUpOpts>) crit;
